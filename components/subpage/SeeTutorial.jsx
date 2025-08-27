@@ -17,8 +17,23 @@ const SeeTutorial = () => {
         
         return () => clearInterval(interval);
     }, [isAutoPlaying]);
+    useEffect(() => {
+        const audio = new Audio('/cancion.mp3');
+        audio.loop = true;
+        audio.muted = false; // Asegurar que no esté muteado
+        
+        // Intentar reproducir con promise
+        audio.play()
+            .then(() => console.log('Audio en bucle'))
+            .catch(error => console.log('Requiere interacción:', error));
+            
+        return () => audio.pause();
+    }, []);
     return (
         <div>
+            <audio autoPlay loop style={{ display: 'none' }}>
+                <source src="/tu-audio.mp3" type="audio/mpeg" />
+            </audio>
             {step === 0 ? (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40, flexDirection: 'column' }}>
                     <Fade in={true} timeout={{ enter: 400 }}>
@@ -32,6 +47,11 @@ const SeeTutorial = () => {
                     <Fade in={true} timeout={{ enter: 800 }}>
                         <Box>
                             <h2 style={{ textAlign: 'center' }}>Sin virus 🥵🥵🥵</h2>
+                        </Box>
+                    </Fade>
+                    <Fade in={true} timeout={{ enter: 600 }}>
+                        <Box>
+                            <h2 style={{ textAlign: 'center' }}>Sin Instalar nada 😱😱😱</h2>
                         </Box>
                     </Fade>
                 </div>
@@ -88,7 +108,7 @@ const SeeTutorial = () => {
                         <Box>
                             <h2 style={{ textAlign: 'center' }}>LIKE PARA MAS TUTORIALES :D</h2>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img src="/gato_okay.gif" alt="" style={{width:'450px'}}/>
+                                <img src="/gato_okay.gif" alt=" " style={{width:'450px'}}/>
                             </div>
                         </Box>
                     </Fade>
@@ -96,13 +116,6 @@ const SeeTutorial = () => {
             )
 
             : null}
-            
-            
-            <Fade in={true} timeout={{ enter: 600 }}>
-                <Box>
-                    <h2 style={{ textAlign: 'center' }}>Sin Instalar nada 😱😱😱</h2>
-                </Box>
-            </Fade>
             <Fade in={true} timeout={{ enter: 500 }}>
                 <Box>
                     <a 
